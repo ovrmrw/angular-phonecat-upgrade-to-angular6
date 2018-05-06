@@ -20,3 +20,5 @@ https://angular.io/guide/upgrade#phonecat-upgrade-tutorial
     - re-written as Angular manner and downgraded for the routing purpose.
 - HelloComponent
     - pure AngularJS component.
+- HelloBridgeDirective
+    - a bridge directive in order to display pure AngularJS components in Angular world.
