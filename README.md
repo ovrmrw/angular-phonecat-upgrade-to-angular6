@@ -9,3 +9,14 @@ https://github.com/angular/angular-phonecat
 ## PhoneCat Upgrade Tutorial
 
 https://angular.io/guide/upgrade#phonecat-upgrade-tutorial
+
+---
+
+## Detail
+
+- PhoneService, CheckmarkPipe
+    - re-written as Angular manner and running on Angular.
+- PhoneListComponent, PhoneDetailComponent
+    - re-written as Angular manner and downgraded for the routing purpose.
+- HelloComponent
+    - pure AngularJS component.
