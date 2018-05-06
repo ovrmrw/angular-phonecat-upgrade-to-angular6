@@ -11,11 +11,18 @@ import { PhoneDetailComponent } from './phone-detail/phone-detail.component';
 import { routeParamsProvider } from './ajs-upgraded-providers';
 import { CheckmarkPipe } from './core/checkmark/checkmark.pipe';
 import { AppComponent } from './app.component';
+import { HelloBridgeDirective } from './hello/hello.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [/* AppRoutingModule, */ BrowserModule, UpgradeModule, HttpClientModule, FormsModule],
-  declarations: [AppComponent, PhoneListComponent, PhoneDetailComponent, CheckmarkPipe],
+  declarations: [
+    AppComponent,
+    PhoneListComponent,
+    PhoneDetailComponent,
+    CheckmarkPipe,
+    HelloBridgeDirective
+  ],
   entryComponents: [PhoneListComponent, PhoneDetailComponent],
   providers: [routeParamsProvider, Phone]
   // bootstrap: [AppComponent]
@@ -24,6 +31,6 @@ export class AppModule {
   constructor(private upgrade: UpgradeModule) {}
 
   ngDoBootstrap() {
-    this.upgrade.bootstrap(document.documentElement, ['phonecatApp']);
+    this.upgrade.bootstrap(document.documentElement, ['phonecatApp'], { strictDi: true });
   }
 }

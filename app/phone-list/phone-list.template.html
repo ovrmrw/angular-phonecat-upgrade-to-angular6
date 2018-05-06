@@ -16,9 +16,6 @@
         </select>
       </p>
 
-      <!-- Downgraded Component can not display pure AngularJS Components. -->
-      <app-hello></app-hello><!-- <== This is not displayed. -->
-
     </div>
     <div class="col-md-10">
       <!--Body content-->
@@ -45,3 +42,6 @@
     </div>
   </div>
 </div>
+
+<!-- (Downgraded) Angular component can not display pure AngularJS components without bridge-directives. -->
+<app-hello></app-hello><!-- <== Needs bridge-directives. -->
