@@ -107,10 +107,10 @@ module.exports = [
     },
     devtool: 'source-map'
   },
-  /* Polyfills, Styles, AngularJS modules */
+  /* Polyfills, Styles */
   {
     mode: 'development',
-    entry: ['./app/polyfills.ts', './app/global-styles.ts', './app/ajs-libs.ts'],
+    entry: ['./app/polyfills.ts', './app/global-styles.ts'],
     resolve: {
       extensions: ['.js', '.ts']
     },

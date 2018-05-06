@@ -1,3 +1,5 @@
+import './ajs-libs';
+
 import './ajs-app.module';
 import './ajs-app.config';
 import './ajs-app.animations';
