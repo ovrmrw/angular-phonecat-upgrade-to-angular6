@@ -20,11 +20,21 @@ module.exports = function(config) {
 
     browsers: ['Firefox'],
 
-    plugins: ['karma-firefox-launcher', 'karma-jasmine', 'karma-webpack', 'karma-sourcemap-loader'],
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine',
+      'karma-webpack',
+      'karma-sourcemap-loader'
+    ],
 
     preprocessors: {
       'app/test.ts': ['webpack', 'sourcemap']
     },
+
+    color: true,
+
+    reporters: ['progress'],
 
     webpack: {
       mode: 'development',
@@ -85,10 +95,6 @@ module.exports = function(config) {
 
     webpackMiddleware: {
       stats: 'errors-only'
-    },
-
-    color: true,
-
-    reporters: ['progress']
+    }
   });
 };
