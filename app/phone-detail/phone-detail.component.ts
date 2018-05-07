@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { Phone, PhoneData } from '../core/phone/phone.service';
 
 declare var angular: ng.IAngularStatic;
@@ -12,7 +12,7 @@ import { RouteParams } from '../ajs-upgraded-providers';
   styleUrls: ['./phone-detail.template.scss']
 })
 export class PhoneDetailComponent {
-  phone: PhoneData;
+  phone: PhoneData & any;
   mainImageUrl: string;
 
   // static $inject = ['RouteParams', 'phone'];

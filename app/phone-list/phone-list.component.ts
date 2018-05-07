@@ -57,7 +57,7 @@ export class PhoneListComponent {
 
 // Register `phoneList` component, along with its associated controller and template
 // angular.module('phoneList').component('phoneList', {
-//   templateUrl: 'phone-list/phone-list.ajs.template.html',
+//   templateUrl: 'phone-list/phone-list.template.html',
 //   controller: PhoneListComponent
 // });
 

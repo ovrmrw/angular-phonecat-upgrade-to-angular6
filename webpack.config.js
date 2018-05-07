@@ -6,13 +6,15 @@ module.exports = [
   /* Angular */
   {
     mode: 'development',
-    entry: './app/main.ts',
+    entry: {
+      angular: './app/main.ts'
+    },
     resolve: {
       extensions: ['.js', '.ts']
     },
     output: {
       path: path.join(__dirname, 'dist'),
-      filename: 'bundle.js'
+      filename: '[name]-bundle.js'
     },
     module: {
       rules: [
@@ -22,14 +24,6 @@ module.exports = [
           loader: '@ngtools/webpack'
         },
         {
-          test: /\.(eot|svg|cur)$/,
-          loader: 'file-loader'
-        },
-        {
-          test: /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|ani)$/,
-          loader: 'url-loader'
-        },
-        {
           /* Component templates */
           test: /\.html$/,
           loader: 'raw-loader'
@@ -37,24 +31,20 @@ module.exports = [
         {
           /* Component CSS styles */
           test: /\.css$/,
-          loader: 'raw-loader',
-          exclude: /\/(styles|bootstrap)\//
+          loader: 'raw-loader'
         },
         {
           /* Component SCSS styles */
           test: /\.(scss|sass)$/,
-          use: [{ loader: 'raw-loader' }, { loader: 'sass-loader' }],
-          exclude: /\/(styles|bootstrap)\//
-        },
-        {
-          /* Global CSS styles */
-          test: /\/(styles|bootstrap)\/.+\.css$/,
-          use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
-        },
-        {
-          /* Global SCSS styles */
-          test: /\/(styles|bootstrap)\/.+\.(scss|sass)$/,
-          use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }]
+          use: [
+            { loader: 'raw-loader' },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
         }
       ]
     },
@@ -73,13 +63,15 @@ module.exports = [
   /* AngularJS */
   {
     mode: 'development',
-    entry: './app/ajs-main.ts',
+    entry: {
+      ajs: './app/ajs-main.ts'
+    },
     resolve: {
       extensions: ['.js', '.ts']
     },
     output: {
       path: path.join(__dirname, 'dist'),
-      filename: 'ajs-bundle.js'
+      filename: '[name]-bundle.js'
     },
     module: {
       rules: [
@@ -110,13 +102,16 @@ module.exports = [
   /* Polyfills, Styles */
   {
     mode: 'development',
-    entry: ['./app/polyfills.ts', './app/global-styles.ts'],
+    entry: {
+      polyfills: './app/polyfills.ts',
+      styles: './app/global-styles.ts'
+    },
     resolve: {
       extensions: ['.js', '.ts']
     },
     output: {
       path: path.join(__dirname, 'dist'),
-      filename: 'polyfills-bundle.js'
+      filename: '[name]-bundle.js'
     },
     module: {
       rules: [
@@ -140,7 +135,16 @@ module.exports = [
         {
           /* Global SCSS styles */
           test: /\.(scss|sass)$/,
-          use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }]
+          use: [
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
         }
       ]
     },

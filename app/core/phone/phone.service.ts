@@ -26,10 +26,11 @@ export interface PhoneData {
   images: string[];
   id: string;
   imageUrl: string;
-  [key: string]: any;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Phone {
   constructor(private http: HttpClient) {}
 

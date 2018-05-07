@@ -5,7 +5,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "strict": false,
-    "skipLibCheck": false
+    "skipLibCheck": false,
+    "sourceMap": true
   },
   "include": ["app/**/*.ts"],
   "angularCompilerOptions": {
