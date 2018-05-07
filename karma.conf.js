@@ -1,26 +1,79 @@
-//jshint strict: false
 module.exports = function(config) {
   config.set({
-    basePath: './dist',
+    basePath: '',
+
+    mime: {
+      'text/x-typescript': ['ts']
+    },
 
     files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-animate/angular-animate.js',
-      'bower_components/angular-resource/angular-resource.js',
-      'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      '**/*.module.js',
-      '*!(.module|.spec).js',
-      '!(bower_components)/**/*!(.module|.spec).js',
-      '**/*.spec.js'
+      'node_modules/core-js/client/shim.js',
+      'node_modules/zone.js/dist/zone.js',
+      'app/test.ts'
     ],
 
     autoWatch: true,
 
     frameworks: ['jasmine'],
 
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['Firefox'],
 
-    plugins: ['karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine']
+    plugins: ['karma-firefox-launcher', 'karma-jasmine', 'karma-webpack'],
+
+    preprocessors: {
+      'app/test.ts': ['webpack']
+    },
+
+    webpack: {
+      mode: 'development',
+      resolve: {
+        extensions: ['.js', '.ts']
+      },
+      module: {
+        rules: [
+          {
+            /* Components */
+            test: /\.ts$/,
+            use: [
+              {
+                loader: 'ts-loader',
+                options: { transpileOnly: true }
+              },
+              {
+                loader: 'angular2-template-loader'
+              }
+            ]
+          },
+          {
+            /* Component templates */
+            test: /\.html$/,
+            loader: 'raw-loader'
+          },
+          {
+            /* Component CSS styles */
+            test: /\.css$/,
+            loader: 'raw-loader'
+          },
+          {
+            /* Component SCSS styles */
+            test: /\.(scss|sass)$/,
+            use: [
+              { loader: 'raw-loader' },
+              {
+                loader: 'sass-loader',
+                options: {
+                  sourceMap: true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      performance: {
+        hints: false
+      }
+    },
+
+    color: true
   });
 };
