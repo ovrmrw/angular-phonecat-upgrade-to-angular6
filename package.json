@@ -6,6 +6,7 @@
   "license": "MIT",
   "devDependencies": {
     "@angular/compiler-cli": "^6.0.0",
+    "@angular/language-service": "^6.0.0",
     "@ngtools/webpack": "^6.0.0",
     "@types/angular": "^1.6.45",
     "@types/angular-animate": "^1.5.9",
@@ -45,8 +46,7 @@
     "postinstall": "bower install",
     "prestart": "npm install",
     "start": "http-server ./dist -a localhost -p 8000 -c-1",
-    "test": "karma start karma.conf.js",
-    "test-single-run": "karma start karma.conf.js --single-run",
+    "test": "karma start karma.conf.ajs.js && karma start karma.conf.js",
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
@@ -54,10 +54,12 @@
     "update-index-async": "node -e \"var fs=require('fs'),indexFile='app/index-async.html',loaderFile='app/bower_components/angular-loader/angular-loader.min.js',loaderText=fs.readFileSync(loaderFile,'utf-8').split(/sourceMappingURL=angular-loader.min.js.map/).join('sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map'),indexText=fs.readFileSync(indexFile,'utf-8').split(/\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/).join('//@@NG_LOADER_START@@\\n'+loaderText+'    //@@NG_LOADER_END@@');fs.writeFileSync(indexFile,indexText);\"",
     "webpack": "webpack --config webpack.config.js",
     "webpack:w": "webpack --watch --config webpack.config.js",
+    "webpack:prod": "webpack -p --config webpack.config.js",
     "clean": "rm -rf dist",
     "copy": "cp -R app dist/ && find dist -name '*.ts' -delete",
     "build": "npm run clean && npm run copy && npm run webpack",
-    "build:w": "npm run clean && npm run copy && npm run webpack:w"
+    "build:w": "npm run clean && npm run copy && npm run webpack:w",
+    "build:prod": "npm run clean && npm run copy && npm run webpack:prod"
   },
   "dependencies": {
     "@angular/common": "^6.0.0",
