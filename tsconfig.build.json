@@ -4,7 +4,6 @@
     "target": "es2015",
     "module": "esnext",
     "moduleResolution": "node",
-    "strict": false,
     "skipLibCheck": false,
     "sourceMap": true
   },
