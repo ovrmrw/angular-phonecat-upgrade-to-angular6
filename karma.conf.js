@@ -15,6 +15,7 @@ module.exports = function(config) {
     ],
 
     autoWatch: true,
+    singleRun: true,
 
     frameworks: ['jasmine'],
 
@@ -44,40 +45,29 @@ module.exports = function(config) {
       module: {
         rules: [
           {
-            /* Components */
             test: /\.ts$/,
             use: [
-              {
-                loader: 'ts-loader',
-                options: { transpileOnly: true }
-              },
-              {
-                loader: 'angular2-template-loader'
-              }
-            ]
+              { loader: 'ts-loader', options: { transpileOnly: true } },
+              { loader: 'angular2-template-loader' }
+            ],
+            exclude: [/\.spec\.ts$/]
           },
           {
-            /* Component templates */
+            test: /\.ts$/,
+            use: [{ loader: 'ts-loader', options: { transpileOnly: true } }],
+            include: [/\.spec\.ts$/]
+          },
+          {
             test: /\.html$/,
             loader: 'raw-loader'
           },
           {
-            /* Component CSS styles */
             test: /\.css$/,
             loader: 'raw-loader'
           },
           {
-            /* Component SCSS styles */
             test: /\.(scss|sass)$/,
-            use: [
-              { loader: 'raw-loader' },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true
-                }
-              }
-            ]
+            use: [{ loader: 'raw-loader' }, { loader: 'sass-loader', options: { sourceMap: true } }]
           }
         ]
       },
