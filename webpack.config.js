@@ -21,7 +21,8 @@ module.exports = [
         {
           /* Components (Angular) */
           test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-          loader: '@ngtools/webpack'
+          loader: '@ngtools/webpack',
+          exclude: [/\.spec\.ts$/]
         },
         {
           /* Component templates */
@@ -55,6 +56,18 @@ module.exports = [
         sourceMap: true
       })
     ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /node_modules/,
+            name: 'angular-vendor',
+            chunks: 'initial',
+            enforce: true
+          }
+        }
+      }
+    },
     performance: {
       hints: false
     },
@@ -80,7 +93,7 @@ module.exports = [
           test: /\.ts$/,
           use: [
             { loader: 'ng-annotate-loader' },
-            { loader: 'ts-loader' },
+            { loader: 'ts-loader', options: { transpileOnly: true } },
             {
               loader: 'angularjs-template-loader',
               options: { relativeTo: path.resolve(__dirname, 'app') }
@@ -93,6 +106,18 @@ module.exports = [
           loader: 'raw-loader'
         }
       ]
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /bower_components/,
+            name: 'ajs-vendor',
+            chunks: 'initial',
+            enforce: true
+          }
+        }
+      }
     },
     performance: {
       hints: false
@@ -117,7 +142,7 @@ module.exports = [
       rules: [
         {
           test: /\.ts$/,
-          loader: 'ts-loader'
+          use: [{ loader: 'ts-loader', options: { transpileOnly: true } }]
         },
         {
           test: /\.(eot|svg|cur)$/,
