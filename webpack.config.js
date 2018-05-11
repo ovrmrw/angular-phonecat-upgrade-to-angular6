@@ -3,11 +3,12 @@ const ngtoolsWebpack = require('@ngtools/webpack');
 const { AngularCompilerPlugin } = ngtoolsWebpack;
 
 module.exports = [
-  /* Angular */
+  /* Polyfills, Styles */
   {
     mode: 'development',
     entry: {
-      angular: './app/main.ts'
+      polyfills: './app/polyfills.ts',
+      styles: './app/global-styles.ts'
     },
     resolve: {
       extensions: ['.js', '.ts']
@@ -19,26 +20,28 @@ module.exports = [
     module: {
       rules: [
         {
-          /* Components (Angular) */
-          test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-          loader: '@ngtools/webpack',
-          exclude: [/\.spec\.ts$/]
+          test: /\.ts$/,
+          use: [{ loader: 'ts-loader', options: { transpileOnly: true } }]
         },
         {
-          /* Component templates */
-          test: /\.html$/,
-          loader: 'raw-loader'
+          test: /\.(eot|svg|cur)$/,
+          loader: 'file-loader'
         },
         {
-          /* Component CSS styles */
+          test: /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|ani)$/,
+          loader: 'url-loader'
+        },
+        {
+          /* Global CSS styles */
           test: /\.css$/,
-          loader: 'raw-loader'
+          use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
         },
         {
-          /* Component SCSS styles */
+          /* Global SCSS styles */
           test: /\.(scss|sass)$/,
           use: [
-            { loader: 'raw-loader' },
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
             {
               loader: 'sass-loader',
               options: {
@@ -48,25 +51,6 @@ module.exports = [
           ]
         }
       ]
-    },
-    plugins: [
-      new AngularCompilerPlugin({
-        tsConfigPath: './tsconfig.build.json',
-        entryModule: './app/app.module#AppModule',
-        sourceMap: true
-      })
-    ],
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
-            test: /node_modules/,
-            name: 'angular-vendor',
-            chunks: 'initial',
-            enforce: true
-          }
-        }
-      }
     },
     performance: {
       hints: false
@@ -124,12 +108,11 @@ module.exports = [
     },
     devtool: 'source-map'
   },
-  /* Polyfills, Styles */
+  /* Angular */
   {
     mode: 'development',
     entry: {
-      polyfills: './app/polyfills.ts',
-      styles: './app/global-styles.ts'
+      angular: './app/main.ts'
     },
     resolve: {
       extensions: ['.js', '.ts']
@@ -141,28 +124,26 @@ module.exports = [
     module: {
       rules: [
         {
-          test: /\.ts$/,
-          use: [{ loader: 'ts-loader', options: { transpileOnly: true } }]
+          /* Components (Angular) */
+          test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+          loader: '@ngtools/webpack',
+          exclude: [/\.spec\.ts$/]
         },
         {
-          test: /\.(eot|svg|cur)$/,
-          loader: 'file-loader'
+          /* Component templates */
+          test: /\.html$/,
+          loader: 'raw-loader'
         },
         {
-          test: /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|ani)$/,
-          loader: 'url-loader'
-        },
-        {
-          /* Global CSS styles */
+          /* Component CSS styles */
           test: /\.css$/,
-          use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
+          loader: 'raw-loader'
         },
         {
-          /* Global SCSS styles */
+          /* Component SCSS styles */
           test: /\.(scss|sass)$/,
           use: [
-            { loader: 'style-loader' },
-            { loader: 'css-loader' },
+            { loader: 'raw-loader' },
             {
               loader: 'sass-loader',
               options: {
@@ -170,8 +151,33 @@ module.exports = [
               }
             }
           ]
+        },
+        {
+          // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
+          // Removing this will cause deprecation warnings to appear.
+          test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+          parser: { system: true }
         }
       ]
+    },
+    plugins: [
+      new AngularCompilerPlugin({
+        tsConfigPath: './tsconfig.build.json',
+        entryModule: './app/app.module#AppModule',
+        sourceMap: true
+      })
+    ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /node_modules/,
+            name: 'angular-vendor',
+            chunks: 'initial',
+            enforce: true
+          }
+        }
+      }
     },
     performance: {
       hints: false

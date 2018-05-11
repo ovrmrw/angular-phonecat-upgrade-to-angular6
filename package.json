@@ -57,8 +57,8 @@
     "webpack:prod": "webpack -p --config webpack.config.js",
     "clean": "rm -rf dist",
     "copy": "cp -R app dist/ && find dist -name '*.ts' -delete",
-    "build": "npm run clean && npm run copy && npm run webpack",
-    "build:w": "npm run clean && npm run copy && npm run webpack:w",
+    "build": "npm run copy && npm run webpack",
+    "build:w": "npm run copy && npm run webpack:w",
     "build:prod": "npm run clean && npm run copy && npm run webpack:prod"
   },
   "dependencies": {
